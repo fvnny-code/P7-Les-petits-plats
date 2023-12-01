@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Les petits plats, outil de recettes de cuisine"
+    />
+    <meta
+      name="keywords"
+      content="Les petits plats, outil de recettes de cuisine"
+    />
+
+    <link rel="icon" href="./assets/icons-logo/Logo-icon.png" />
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" />
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/5f2e0ae9aa.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>LES PETITS PLATS</title>
+  </head>
+  <body>
+    <header>
+      <img
+        class="logo"
+        src="./assets/icons-logo/Logo.svg"
+        alt="Logo : Les petits plats"
+      />
+      <h1 class="hero-text">
+        CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET
+        DÉLICIEUSES
+      </h1>
+      <div class="search__input-group">
+        <input
+          type="search"
+          placeholder="Rechercher une recette, un ingrédient, ..."
+          class="search__input"
+        />
+        <span class="search__icon">
+          <img
+            src="./assets/icons-logo/Loop-CTA-Default.svg"
+            alt="icone-loupe"
+            class="search-icon"
+          />
+        </span>
+      </div>
+    </header>
+    <main class="main">
+      <section id="tags__selected">
+        <!-- ARRAYS OF TAGS IN JS -->
+        <div class="tag__ingredients--wrapper"></div>
+        <div class="tag__appliances--wrapper"></div>
+        <div class="tag__ustensils--wrapper"></div>
+      </section>
+
+      <section id="filters">
+        <div class="filter__ingredients"></div>
+        <div class="filter__appliances"></div>
+        <div class="filter__ustensils"></div>
+      </section>
+      <section id="recipes__cards">
+        <!-- CARDS COMPONENT JS Recipes_card.js -->
+      </section>
+      <span class="no-result__message"></span>
+    </main>
+
+    <script src="./scripts/main_index/index.js"></script>
+
+  </body>
+</html>
