@@ -77,7 +77,8 @@ header {
   overflow: hidden;
   margin: auto;
 }
-.search__input {
+.search__input,
+.btn {
   width: 100%;
   padding: 1.5rem;
   border: none;
@@ -99,14 +100,31 @@ header {
   width: 90%;
 }
 
+/* DROPDOWN FILTERS SECTION */
+.btn-group{
+  width: 20%;
+}
+input-group {
+  position: relative;
+  padding: 10px !important;
+}
+.input-group-append {
+  position: absolute;
+  top: 35%;
+  right: 25px;
+}
+.dropdown-toggle {
+  background-color: var(--white);
+
+}
 /* RECIPES SECTION - ARTICLES */
 
 #recipes__cards {
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
   flex-wrap: wrap;
   margin: 2rem;
-  width: 90%;
 }
 
 #recipes__cards article {
@@ -144,6 +162,7 @@ header {
 .duration {
   text-align: center;
   font-size: var(--fs-12);
+  margin-bottom: 0;
 }
 
 .article-header {

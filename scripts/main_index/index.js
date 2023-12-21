@@ -116,30 +116,41 @@ const search = () => {
   if (value.length === 0) {
   }
   /**
-  *implémenter les tags HTML:
- * intégrer dropdowns avec list avec bootstrap (composant dropdown)
+   *implémenter les tags HTML:
+   * intégrer dropdowns + list avec bootstrap (composant dropdown)
    */
-/**
- * UpdateDprodowns ():
- * Afficher nouvelle liste (celle contenue dans les dropdowns)
- */
-/**
- * Créer l'input search : 
- * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
- * si >= 1 caractère filtre Sinon on affiche tout.
- * 
- * Set() créer un tableau d'éléments uniques.
- */
+
+  // function getDropdown(data){
+  //   return `
+    
+  //   `
+  // }
+
+  function displayDropdownFilters() {
+    const recipeSection = document.getElementById("filters");
+
+    recipeSection.innerHTML = "";
+  }
+
+  /**
+   * UpdateDprodowns ():
+   * Afficher nouvelle liste (celle contenue dans les dropdowns)
+   */
+  /**
+   * Créer l'input search :
+   * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
+   * si >= 1 caractère filtre Sinon on affiche tout.
+   *
+   * Set() créer un tableau d'éléments uniques.
+   */
 
   displayData(currentRecipes);
-  
 
-/** 
- * Mise à jour des listes pour sélectionner un tag :
- * reprendre le même principe que displaydata() mais avec dropdown.
- * 
- */
-
+  /**
+   * Mise à jour des listes pour sélectionner un tag :
+   * reprendre le même principe que displaydata() mais avec dropdown.
+   *
+   */
 };
 
 searchInput.addEventListener("input", (event) => {
