@@ -110,23 +110,7 @@ header {
 .main {
   width: 90%;
 }
-
 /* DROPDOWN FILTERS SECTION */
-/* .btn-group {
-  width: 20%;
-}
-input-group {
-  position: relative;
-  padding: 10px !important;
-}
-.input-group-append {
-  position: absolute;
-  top: 35%;
-  right: 25px;
-}
-.dropdown-toggle {
-  background-color: var(--white);
-} */
 
 #filters {
   width: 68%;

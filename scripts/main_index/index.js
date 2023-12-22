@@ -59,68 +59,26 @@ function getRecipeCard(data) {
           </div>
         </div>
       </div>
-  
     </article>
       `;
 }
-
 /**
- *
  * Filters implementation
  */
-function getDropdown(ingredients, appliance, ustensils) {
+function getDropdown(data) {
   return `
-  <div class="filter__item">
-  <ul> 
-    <li class="dropdown">
-      <a href="#">${ingredients}</a>
-      <ul class="drop-nav">
-        <div class="filter__search" >              
-          <input type="search" >
-          <span class="filter__search--icon"><i class="fa fa-search"></i>
-          </span>
-        </div>
-        ${ingredients
-          .map(
-            (i) => `
-          <li><a href="#">${i.ingredient}</a></li>
-          `
-          )
-          .join("")}
-  </ul>
-  </div>
-  <div class="filter__item">
-  <ul> 
-    <li class="dropdown">
-      <a href="#">${appliance}</a>
-      <ul class="drop-nav">
-        <div class="filter__search" >              
-          <input type="search" >
-          <span class="filter__search--icon"><i class="fa fa-search"></i>
-          </span>
-        </div>
-          <li><a href="#">${appliance}</a></li>
-  </ul>
-  </div>
-  <div class="filter__item">
-  <ul> 
-    <li class="dropdown">
-      <a href="#">${ustensils}</a>
-      <ul class="drop-nav">
-        <div class="filter__search" >              
-          <input type="search" >
-          <span class="filter__search--icon"><i class="fa fa-search"></i>
-          </span>
-        </div>
-
-          <li><a href="#">${ustensils}</a></li>
-
-  </ul>
-  </div>
-
+  ${data
+    .map(
+      (i) => `
+  <li><a href="#">${i}</a></li>
+  `
+    )
+    .join("")}
   `;
 }
-/*** Display cards ***/
+/**
+ * Display cards 
+ */
 function displayData(recipes) {
   const recipeSection = document.getElementById("recipes__cards");
   recipeSection.innerHTML = "";
@@ -133,18 +91,37 @@ function displayData(recipes) {
  * Display filters
  */
 function displayDropdown(recipes) {
-  const filtersSection = document.getElementById("filters");
-  filtersSection.innerHTML = " ";
+  const ingredientsSet = new Set();
+  const applianceSet = new Set();
+  const ustensilsSet = new Set();
 
   recipes.forEach((recipe) => {
-    const ingredientFilter = getDropdown(recipe.ingredients);
-    filtersSection.innerHTML += ingredientFilter;
+    recipe.ingredients
+      .map((i) => i.ingredient)
+      .forEach((i) => {
+        ingredientsSet.add(i);
+      });
 
-    const applianceFilter = getDropdown(recipe.appliance);
-    filtersSection.innerHTML += applianceFilter;
-    const ustensilsFilter = getDropdown(recipe.ustensils);
-    filtersSection.innerHTML += ustensilsFilter;
+    applianceSet.add(recipe.appliance);
+
+    recipe.ustensils.forEach((u) => {
+      ustensilsSet.add(u);
+    });
   });
+  const ingredientsList = getDropdown([...ingredientsSet]);
+  document.getElementById("ingredients__list").innerHTML = ingredientsList;
+
+  const applianceList = getDropdown([...applianceSet]);
+  document.getElementById("appliance__list").innerHTML = applianceList;
+
+  const ustensilsList = getDropdown([...ustensilsSet]);
+  document.getElementById("ustensils__list").innerHTML = ustensilsList;
+
+  /**
+   * TODO :
+   * ajout d'un eventListener pour réagir à la sélection d'un tag au clic
+   * au clic : mise à jour du DOM (afficher élement sélectionné) + appel à la function search().
+   */
 }
 
 /**
@@ -186,30 +163,14 @@ const search = () => {
   }
   if (value.length === 0) {
   }
-  /**
-   *implémenter les tags HTML:
-   * intégrer dropdowns + list
-   */
 
   /**
-   * UpdateDprodowns ():
-   * Afficher nouvelle liste (celle contenue dans les dropdowns)
-   */
-  /**
-   * Créer l'input search :
    * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
    * si >= 1 caractère filtre Sinon on affiche tout.
-   *
-   * Set() créer un tableau d'éléments uniques.
    */
 
   displayData(currentRecipes);
-
-  /**
-   * Mise à jour des listes pour sélectionner un tag :
-   * reprendre le même principe que displaydata() mais avec dropdown.
-   *
-   */
+  displayDropdown(currentRecipes);
 };
 
 searchInput.addEventListener("input", (event) => {
@@ -222,7 +183,7 @@ searchInput.addEventListener("input", (event) => {
 });
 
 function init() {
-  /* Display recipes */
+
   displayData(allRecipes);
   displayDropdown(allRecipes);
 }
