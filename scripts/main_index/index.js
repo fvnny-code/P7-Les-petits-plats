@@ -8,7 +8,7 @@ async function getDataJson() {
 }
 
 /** Recipe cars generation
- * getRecipeCard is used in index.js
+ *
  */
 function getRecipeCard(data) {
   const { image, name, ingredients, time, description, appliance, ustensils } =
@@ -64,15 +64,86 @@ function getRecipeCard(data) {
       `;
 }
 
+/**
+ *
+ * Filters implementation
+ */
+function getDropdown(ingredients, appliance, ustensils) {
+  return `
+  <div class="filter__item">
+  <ul> 
+    <li class="dropdown">
+      <a href="#">${ingredients}</a>
+      <ul class="drop-nav">
+        <div class="filter__search" >              
+          <input type="search" >
+          <span class="filter__search--icon"><i class="fa fa-search"></i>
+          </span>
+        </div>
+        ${ingredients
+          .map(
+            (i) => `
+          <li><a href="#">${i.ingredient}</a></li>
+          `
+          )
+          .join("")}
+  </ul>
+  </div>
+  <div class="filter__item">
+  <ul> 
+    <li class="dropdown">
+      <a href="#">${appliance}</a>
+      <ul class="drop-nav">
+        <div class="filter__search" >              
+          <input type="search" >
+          <span class="filter__search--icon"><i class="fa fa-search"></i>
+          </span>
+        </div>
+          <li><a href="#">${appliance}</a></li>
+  </ul>
+  </div>
+  <div class="filter__item">
+  <ul> 
+    <li class="dropdown">
+      <a href="#">${ustensils}</a>
+      <ul class="drop-nav">
+        <div class="filter__search" >              
+          <input type="search" >
+          <span class="filter__search--icon"><i class="fa fa-search"></i>
+          </span>
+        </div>
+
+          <li><a href="#">${ustensils}</a></li>
+
+  </ul>
+  </div>
+
+  `;
+}
 /*** Display cards ***/
 function displayData(recipes) {
   const recipeSection = document.getElementById("recipes__cards");
-
   recipeSection.innerHTML = "";
-
   recipes.forEach((recipe) => {
     const recipeCard = getRecipeCard(recipe);
     recipeSection.innerHTML += recipeCard;
+  });
+}
+/**
+ * Display filters
+ */
+function displayDropdown(recipes) {
+  const filtersSection = document.getElementById("filters");
+  filtersSection.innerHTML = " ";
+
+  recipes.forEach((recipe) => {
+    const ingredientFilter = getDropdown(recipe.ingredients);
+    filtersSection.innerHTML += ingredientFilter;
+
+    const applianceFilter = getDropdown(recipe.appliance);
+    filtersSection.innerHTML += applianceFilter;
+    const ustensilsFilter = getDropdown(recipe.ustensils);
+    filtersSection.innerHTML += ustensilsFilter;
   });
 }
 
@@ -87,7 +158,7 @@ const normalize = (originalText) =>
 
 /**
  * Searchbar alogrithm, case 1 :
- * normalize stringvalues
+ * normalize string values
  * check if filter includes recipe name, description and ingredient.
  */
 
@@ -117,20 +188,8 @@ const search = () => {
   }
   /**
    *implémenter les tags HTML:
-   * intégrer dropdowns + list avec bootstrap (composant dropdown)
+   * intégrer dropdowns + list
    */
-
-  // function getDropdown(data){
-  //   return `
-    
-  //   `
-  // }
-
-  function displayDropdownFilters() {
-    const recipeSection = document.getElementById("filters");
-
-    recipeSection.innerHTML = "";
-  }
 
   /**
    * UpdateDprodowns ():
@@ -165,6 +224,7 @@ searchInput.addEventListener("input", (event) => {
 function init() {
   /* Display recipes */
   displayData(allRecipes);
+  displayDropdown(allRecipes);
 }
 
 getDataJson();

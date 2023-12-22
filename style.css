@@ -129,8 +129,8 @@ input-group {
 } */
 
 #filters {
-  width: 70%;
-  padding: 1rem 1.2rem;
+  width: 68%;
+  padding: 1rem 0;
   display: flex;
   margin: 0;
 }
@@ -178,6 +178,8 @@ input-group {
 }
 .drop-nav > li {
   padding: 0.5rem 2rem;
+  /* text-overflow: ellipsis;
+  overflow: scroll; */
 }
 .drop-nav > li:hover {
   background-color: var(--yellow);
