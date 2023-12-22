@@ -49,6 +49,16 @@ p {
   font-size: var(--fs-16);
   line-height: 19.12px;
 }
+
+ul,
+a {
+  list-style: none;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  color: var(--black);
+}
+
 /* HERO  */
 header {
   background-image: url(./assets/Photos/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png);
@@ -74,6 +84,7 @@ header {
 .search__input-group {
   width: 70%;
   position: relative;
+  bottom: 100px;
   overflow: hidden;
   margin: auto;
 }
@@ -90,7 +101,7 @@ header {
   background: transparent;
   border: none;
   right: 4px;
-  top: 5px;
+  top: 8px;
   height: 00%;
   position: absolute;
 }
@@ -101,7 +112,7 @@ header {
 }
 
 /* DROPDOWN FILTERS SECTION */
-.btn-group{
+/* .btn-group {
   width: 20%;
 }
 input-group {
@@ -115,8 +126,63 @@ input-group {
 }
 .dropdown-toggle {
   background-color: var(--white);
+} */
 
+#filters {
+  width: 70%;
+  padding: 1rem 1.2rem;
+  display: flex;
+  margin: 0;
 }
+#filters:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+.filter__search {
+  margin: 1rem 2rem;
+}
+.filter__search--icon {
+  margin-left: -25px;
+}
+.dropdown {
+  background-color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: var(--br-11);
+  line-height: 35px;
+  width: 270px;
+}
+.dropdown > a {
+  font-size: var(--fs-16);
+  font-weight: 500;
+}
+.dropdown:after {
+  content: "\2304";
+  font-size: 2rem;
+  display: block;
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+}
+.dropdown:hover > .drop-nav {
+  display: block;
+  left: 0;
+}
+.drop-nav {
+  position: absolute;
+  display: none;
+  background-color: var(--white);
+  width: 270px;
+  z-index: 1;
+  border-radius: 0 0 var(--br-11) var(--br-11);
+}
+.drop-nav > li {
+  padding: 0.5rem 2rem;
+}
+.drop-nav > li:hover {
+  background-color: var(--yellow);
+}
+
 /* RECIPES SECTION - ARTICLES */
 
 #recipes__cards {
