@@ -1,4 +1,7 @@
 let allRecipes = [];
+const selectedIngredientsSet = new Set();
+const selectedApplianceSet = new Set();
+const selectedUstensilsSet = new Set();
 
 async function getDataJson() {
   const response = await fetch("data/recipes.json");
@@ -77,7 +80,7 @@ function getDropdown(data) {
   `;
 }
 /**
- * Display cards 
+ * Display cards
  */
 function displayData(recipes) {
   const recipeSection = document.getElementById("recipes__cards");
@@ -99,7 +102,9 @@ function displayDropdown(recipes) {
     recipe.ingredients
       .map((i) => i.ingredient)
       .forEach((i) => {
-        ingredientsSet.add(i);
+        if (!selectedIngredientsSet.has(i)) {
+          ingredientsSet.add(i);
+        }
       });
 
     applianceSet.add(recipe.appliance);
@@ -116,12 +121,6 @@ function displayDropdown(recipes) {
 
   const ustensilsList = getDropdown([...ustensilsSet]);
   document.getElementById("ustensils__list").innerHTML = ustensilsList;
-
-  /**
-   * TODO :
-   * ajout d'un eventListener pour réagir à la sélection d'un tag au clic
-   * au clic : mise à jour du DOM (afficher élement sélectionné) + appel à la function search().
-   */
 }
 
 /**
@@ -164,14 +163,57 @@ const search = () => {
   if (value.length === 0) {
   }
 
+/**
+ * prendre en compte les éléments sélectionnés refiltrer currentRecipes() pour vérifier si ingredient sélectionné fait partie de la liste de la recette en cours.
+ *
+ *  currentRecipes = currentRecipes.fitler((recipe)){
+ * if(
+ * normalize(selectedIngredientsSet).includes(value) ||
+ * normalize(selectedApplianceSet).includes(value) ||
+ * normalize(selectedUstensilsSet).includes(value)
+ * 
+ * ){
+ * return true
+ * }
+ * return false
+ * };
+ */
+
+  displayData(currentRecipes);
+  displayDropdown(currentRecipes);
+
   /**
    * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
    * si >= 1 caractère filtre Sinon on affiche tout.
    */
-
-  displayData(currentRecipes);
-  displayDropdown(currentRecipes);
+  
+  const ingredientsListByUl = document.getElementById("ingredients__list");
+  const ingredientsListByLi = ingredientsListByUl.children;
+  for (let li of ingredientsListByLi) {
+    li.addEventListener("click", (event) => {
+      // console.log(li.textContent);
+      selectedIngredientsSet.add(li.textContent);
+      DisplaySelectedIngredients();
+      search();
+    });
+  }
 };
+
+function DisplaySelectedIngredients() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__ingredients--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedIngredientsSet.forEach((ingredient) => {
+    const html = `
+    <div class="tag">
+    <p>${ingredient}</p>
+    <p>X</p>
+    </div>
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+}
 
 searchInput.addEventListener("input", (event) => {
   const value = event.target.value;
@@ -183,7 +225,6 @@ searchInput.addEventListener("input", (event) => {
 });
 
 function init() {
-
   displayData(allRecipes);
   displayDropdown(allRecipes);
 }

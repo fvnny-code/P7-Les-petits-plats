@@ -58,6 +58,9 @@ a {
   margin: 0;
   color: var(--black);
 }
+a:hover {
+  color: var(--black);
+}
 
 /* HERO  */
 header {
@@ -159,13 +162,15 @@ header {
   width: 270px;
   z-index: 1;
   border-radius: 0 0 var(--br-11) var(--br-11);
+  height: 324px;
+  text-overflow: ellipsis;
+  overflow: scroll;
 }
-.drop-nav > li {
+
+.drop-nav > ul li {
   padding: 0.5rem 2rem;
-  /* text-overflow: ellipsis;
-  overflow: scroll; */
 }
-.drop-nav > li:hover {
+.drop-nav > ul li:hover {
   background-color: var(--yellow);
 }
 
@@ -245,12 +250,12 @@ header {
 }
 .ingredient-item {
   width: 50%;
-  margin-bottom: 30px;
+  margin-bottom: 30px; 
 }
 .ingredient {
   font-size: var(--fs-14);
   font-weight: 500;
-  line-height: 19.12px;
+  line-height: 1px;
 }
 .quantity {
   font-size: var(--fs-14);
