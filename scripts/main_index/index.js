@@ -172,17 +172,41 @@ const search = () => {
    * pour vérifier si ingredient sélectionné fait partie de la liste de la recette en cours.
    */
 
-  // currentRecipes = currentRecipes.filter((recipe) => {
-  //   if (
-  //     normalize(selectedIngredientsSet).includes(value) ||
-  //     normalize(selectedApplianceSet).includes(value) ||
-  //     normalize(selectedUstensilsSet).includes(value)
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
+  currentRecipes = currentRecipes.filter((recipe) => {
+    let isOk = true;
+    selectedIngredientsSet.forEach((selectedIngredient) => {
+      // si on ne trouve pas l'ingrédient sélectionné dans la recette, on ne garde pas la recette
+      if (
+        recipe.ingredients.find((ingredient) =>
+          ingredient.ingredient.includes(selectedIngredient)
+        ) == undefined
+      ) {
+        isOk = false;
+      }
+    });
+    return isOk;
+  });
 
+  currentRecipes = currentRecipes.filter((recipe) => {
+    let isOk = true;
+
+    selectedApplianceSet.forEach((appliance) => {
+      if (!recipe.appliance.includes(appliance)) {
+        isOk = false;
+      }
+    });
+    return isOk;
+  });
+
+  currentRecipes = currentRecipes.filter((recipe) => {
+    let isOk = true;
+    selectedUstensilsSet.forEach((ustensil) => {
+      if (!recipe.ustensils.includes(ustensil)) {
+        isOk = false;
+      }
+    });
+    return isOk;
+  });
   displayData(currentRecipes);
   displayDropdown(currentRecipes);
 
@@ -195,7 +219,7 @@ const search = () => {
   const ingredientsListByLi = ingredientsListByUl.children;
   for (let li of ingredientsListByLi) {
     li.addEventListener("click", (event) => {
-      console.log(li.textContent);
+      //console.log(li.textContent);
       selectedIngredientsSet.add(li.textContent);
       DisplaySelectedIngredients();
       search();
@@ -205,7 +229,7 @@ const search = () => {
   const appliancesListByLi = appliancesListByUl.children;
   for (let li of appliancesListByLi) {
     li.addEventListener("click", (event) => {
-      console.log(li.textContent);
+      //console.log(li.textContent);
       selectedApplianceSet.add(li.textContent);
       DisplaySelectedAppliances();
       search();
@@ -216,7 +240,7 @@ const search = () => {
   const ustensilsListByLi = ustensilsListByUl.children;
   for (let li of ustensilsListByLi) {
     li.addEventListener("click", (event) => {
-      console.log(li.textContent);
+      //console.log(li.textContent);
       selectedUstensilsSet.add(li.textContent);
       DisplaySelectedUstensils();
       search();
@@ -231,13 +255,31 @@ function DisplaySelectedIngredients() {
   selectedTagsContainer.innerHTML = "";
   selectedIngredientsSet.forEach((ingredient) => {
     const html = `
-    <div class="tag">
+    <div class="tag" data-name="${ingredient}" >
     <p>${ingredient}</p>
-    <p>X</p>
+    <p class="delete-ingredient">X</p>
     </div>
     `;
     selectedTagsContainer.innerHTML += html;
   });
+  // ajouter un eventListener pour les éléments de class "delete-ingredient"
+  const deleteIngredientButtons = document.querySelectorAll(".delete-ingredient")
+  deleteIngredientButtons.forEach(btn =>{
+    
+    btn.addEventListener('click', (event)=>{
+      const div = event.target.parentElement
+      console.log(div.dataset) // on récupère un objet ayant la propriété name
+      if (selectedIngredientsSet.has(div.dataset.name)) {
+        selectedIngredientsSet.delete(div.dataset.name);
+        div.remove()
+        search()
+      }
+    })
+  })
+
+  /**
+   * TODO : la même chose avec displaySelectedAppliances + displaySelectedUstensils
+   */
 }
 
 function DisplaySelectedAppliances() {
