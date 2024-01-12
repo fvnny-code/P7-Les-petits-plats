@@ -107,10 +107,14 @@ function displayDropdown(recipes) {
         }
       });
 
-    applianceSet.add(recipe.appliance);
+    if (!selectedApplianceSet.has(recipe.appliance)) {
+      applianceSet.add(recipe.appliance);
+    }
 
     recipe.ustensils.forEach((u) => {
-      ustensilsSet.add(u);
+      if (!selectedUstensilsSet.has(u)) {
+        ustensilsSet.add(u);
+      }
     });
   });
   const ingredientsList = getDropdown([...ingredientsSet]);
@@ -163,21 +167,21 @@ const search = () => {
   if (value.length === 0) {
   }
 
-/**
- * prendre en compte les éléments sélectionnés refiltrer currentRecipes() pour vérifier si ingredient sélectionné fait partie de la liste de la recette en cours.
- *
- *  currentRecipes = currentRecipes.fitler((recipe)){
- * if(
- * normalize(selectedIngredientsSet).includes(value) ||
- * normalize(selectedApplianceSet).includes(value) ||
- * normalize(selectedUstensilsSet).includes(value)
- * 
- * ){
- * return true
- * }
- * return false
- * };
- */
+  /**
+   * prendre en compte les éléments sélectionnés refiltrer currentRecipes()
+   * pour vérifier si ingredient sélectionné fait partie de la liste de la recette en cours.
+   */
+
+  // currentRecipes = currentRecipes.filter((recipe) => {
+  //   if (
+  //     normalize(selectedIngredientsSet).includes(value) ||
+  //     normalize(selectedApplianceSet).includes(value) ||
+  //     normalize(selectedUstensilsSet).includes(value)
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
 
   displayData(currentRecipes);
   displayDropdown(currentRecipes);
@@ -186,14 +190,35 @@ const search = () => {
    * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
    * si >= 1 caractère filtre Sinon on affiche tout.
    */
-  
+
   const ingredientsListByUl = document.getElementById("ingredients__list");
   const ingredientsListByLi = ingredientsListByUl.children;
   for (let li of ingredientsListByLi) {
     li.addEventListener("click", (event) => {
-      // console.log(li.textContent);
+      console.log(li.textContent);
       selectedIngredientsSet.add(li.textContent);
       DisplaySelectedIngredients();
+      search();
+    });
+  }
+  const appliancesListByUl = document.getElementById("appliance__list");
+  const appliancesListByLi = appliancesListByUl.children;
+  for (let li of appliancesListByLi) {
+    li.addEventListener("click", (event) => {
+      console.log(li.textContent);
+      selectedApplianceSet.add(li.textContent);
+      DisplaySelectedAppliances();
+      search();
+    });
+  }
+
+  const ustensilsListByUl = document.getElementById("ustensils__list");
+  const ustensilsListByLi = ustensilsListByUl.children;
+  for (let li of ustensilsListByLi) {
+    li.addEventListener("click", (event) => {
+      console.log(li.textContent);
+      selectedUstensilsSet.add(li.textContent);
+      DisplaySelectedUstensils();
       search();
     });
   }
@@ -208,6 +233,38 @@ function DisplaySelectedIngredients() {
     const html = `
     <div class="tag">
     <p>${ingredient}</p>
+    <p>X</p>
+    </div>
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+}
+
+function DisplaySelectedAppliances() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__appliances--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedApplianceSet.forEach((appliance) => {
+    const html = `
+    <div class="tag">
+    <p>${appliance}</p>
+    <p>X</p>
+    </div>
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+}
+
+function DisplaySelectedUstensils() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__ustensils--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedUstensilsSet.forEach((ustensils) => {
+    const html = `
+    <div class="tag">
+    <p>${ustensils}</p>
     <p>X</p>
     </div>
     `;
