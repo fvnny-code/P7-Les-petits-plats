@@ -185,6 +185,7 @@ const search = () => {
       }
     });
     return isOk;
+    
   });
 
   currentRecipes = currentRecipes.filter((recipe) => {
@@ -196,6 +197,7 @@ const search = () => {
       }
     });
     return isOk;
+
   });
 
   currentRecipes = currentRecipes.filter((recipe) => {
@@ -209,6 +211,7 @@ const search = () => {
   });
   displayData(currentRecipes);
   displayDropdown(currentRecipes);
+  DisplayFilteredRecipesNumber(currentRecipes.length);
 
   /**
    * Reprendre le principe de search pour ingrédients, unstensiles, appareils :
@@ -247,6 +250,25 @@ const search = () => {
     });
   }
 };
+
+/**
+ * ici reprendre le principe de search() avec tous les dropdowns,
+ * pour que quand je remplis l’input du dropdwon  ingrédients renvoie l’ingrédient correspondant.
+ * Idem pour appareil et ustensiles.
+*/
+
+// display number of filtered recipes
+
+ const DisplayFilteredRecipesNumber = (NumberOfRecipes)=>{
+  const container = document.querySelector(".recipes-number");
+  const string = NumberOfRecipes > 1 ? "recettes" : "recette"
+
+    const html = `
+    <p>${NumberOfRecipes} ${string}</p>
+    `
+    container.innerHTML = html;
+    
+ }
 
 function DisplaySelectedIngredients() {
   const selectedTagsContainer = document.querySelector(
@@ -349,6 +371,7 @@ searchInput.addEventListener("input", (event) => {
 function init() {
   displayData(allRecipes);
   displayDropdown(allRecipes);
+  DisplayFilteredRecipesNumber(allRecipes.length);
 }
 
 getDataJson();
