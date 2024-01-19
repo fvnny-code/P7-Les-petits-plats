@@ -262,24 +262,20 @@ function DisplaySelectedIngredients() {
     `;
     selectedTagsContainer.innerHTML += html;
   });
-  // ajouter un eventListener pour les éléments de class "delete-ingredient"
-  const deleteIngredientButtons = document.querySelectorAll(".delete-ingredient")
-  deleteIngredientButtons.forEach(btn =>{
-    
-    btn.addEventListener('click', (event)=>{
-      const div = event.target.parentElement
-      console.log(div.dataset) // on récupère un objet ayant la propriété name
+  // eventListener
+  const deleteIngredientButtons =
+    document.querySelectorAll(".delete-ingredient");
+  deleteIngredientButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      console.log(div.dataset); // on récupère un objet ayant la propriété name
       if (selectedIngredientsSet.has(div.dataset.name)) {
         selectedIngredientsSet.delete(div.dataset.name);
-        div.remove()
-        search()
+        div.remove();
+        search();
       }
-    })
-  })
-
-  /**
-   * TODO : la même chose avec displaySelectedAppliances + displaySelectedUstensils
-   */
+    });
+  });
 }
 
 function DisplaySelectedAppliances() {
@@ -289,12 +285,25 @@ function DisplaySelectedAppliances() {
   selectedTagsContainer.innerHTML = "";
   selectedApplianceSet.forEach((appliance) => {
     const html = `
-    <div class="tag">
+    <div class="tag" data-name="${appliance}" >
     <p>${appliance}</p>
-    <p>X</p>
+    <p class="delete-appliance">X</p>
     </div>
     `;
     selectedTagsContainer.innerHTML += html;
+  });
+  // eventListener
+  const deleteApplianceButtons = document.querySelectorAll(".delete-appliance");
+  deleteApplianceButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      console.log(div.dataset); // on récupère un objet ayant la propriété name
+      if (selectedApplianceSet.has(div.dataset.name)) {
+        selectedApplianceSet.delete(div.dataset.name);
+        div.remove();
+        search();
+      }
+    });
   });
 }
 
@@ -305,12 +314,26 @@ function DisplaySelectedUstensils() {
   selectedTagsContainer.innerHTML = "";
   selectedUstensilsSet.forEach((ustensils) => {
     const html = `
-    <div class="tag">
+    <div class="tag" data-name="${ustensils}" >
     <p>${ustensils}</p>
-    <p>X</p>
+    <p class="delete-ustensils">X</p>
     </div>
+
     `;
     selectedTagsContainer.innerHTML += html;
+  });
+  // eventListener
+  const deleteUstensilsButtons = document.querySelectorAll(".delete-ustensils");
+  deleteUstensilsButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      console.log(div.dataset); // on récupère un objet ayant la propriété name
+      if (selectedUstensilsSet.has(div.dataset.name)) {
+        selectedUstensilsSet.delete(div.dataset.name);
+        div.remove();
+        search();
+      }
+    });
   });
 }
 
