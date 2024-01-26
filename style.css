@@ -116,15 +116,29 @@ header {
 /* DROPDOWN FILTERS SECTION */
 
 #filters {
-  width: 68%;
+  width: 100%;
   padding: 1rem 0;
   display: flex;
   margin: 0;
+  justify-content: space-between;
+  gap: 2rem;
+
 }
 #filters:after {
   content: " ";
   display: table;
   clear: both;
+}
+
+.filter__items{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 85%;
+  margin: 0;
+}
+.filter__item{
+  margin: 1rem 2rem;
 }
 .filter__search {
   margin: 1rem 2rem;
@@ -173,33 +187,37 @@ header {
 .drop-nav > ul li:hover {
   background-color: var(--yellow);
 }
+.recipes-number{
+  margin-top: 2rem;
+  font-weight: bold;
+  margin-right: 0;
+}
 
 /* TAGS SECTION */
 #tags__selected{
+  width: 60%;
   display: flex;
-  justify-content: space-between;
   gap: 2rem;
-  flex-wrap: wrap;
-  margin: 2rem;
+  margin: 0.6rem;
 }
 .tag__ingredients--wrapper, 
 .tag__appliances--wrapper,
 .tag__ustensils--wrapper {  
 
-  width: 300px;
+  width: 270px;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0;
+  margin-top: 2rem;
+  
 }
 .tag {
   width: 270px;
   border-radius: 10px;
   background-color: var(--yellow);
   padding: 1.2rem;
-  margin: 0;
+ 
   display: flex;
   justify-content: space-between;
   align-items: center;

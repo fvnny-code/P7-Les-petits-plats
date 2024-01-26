@@ -65,60 +65,65 @@
     </header>
     <main class="main">
       <section id="filters">
+        <div class="filter__items">
         <div class="filter__item">
           <div class="dropdown">
             <a href="#">Ingrédients</a>
             <div class="drop-nav">
               <div class="filter__search">
-                <input type="search" />
+                <input type="search" id="searchIngredients" />
                 <span class="filter__search--icon"
                   ><i class="fa fa-search"></i>
                 </span>
               </div>
-              <ul id="ingredients__list">
-              </ul>
+              <ul id="ingredients__list"></ul>
             </div>
           </div>
+          <div class="tag__ingredients--wrapper"></div>
+
         </div>
         <div class="filter__item">
           <div class="dropdown">
             <a href="#">Appareil</a>
             <div class="drop-nav">
               <div class="filter__search">
-                <input type="search" />
+                <input type="search" id="searchAppliances"/>
                 <span class="filter__search--icon"
                   ><i class="fa fa-search"></i>
                 </span>
               </div>
-              <ul id="appliance__list">
-              </ul>
+              <ul id="appliance__list"></ul>
             </div>
           </div>
+          <div class="tag__appliances--wrapper"></div>
+
         </div>
         <div class="filter__item">
           <div class="dropdown">
             <a href="#">Ustensiles</a>
             <div class="drop-nav">
               <div class="filter__search">
-                <input type="search" />
+                <input type="search" id="searchUstensils"/>
                 <span class="filter__search--icon"
                   ><i class="fa fa-search"></i>
                 </span>
               </div>
-              <ul id="ustensils__list">
-              </ul>
+              <ul id="ustensils__list"></ul>
             </div>
           </div>
+          <div class="tag__ustensils--wrapper"></div>
+
         </div>
+      </div>
+        <div class="recipes-number"></div>
       </section>
 
       <section id="tags__selected">
         <!-- ARRAYS OF TAGS IN JS -->
-        <div class="tag__ingredients--wrapper"></div>
+        <!-- <div class="tag__ingredients--wrapper"></div>
         <div class="tag__appliances--wrapper"></div>
-        <div class="tag__ustensils--wrapper"></div>
-        <div class="recipes-number"> 
-        </div>
+        <div class="tag__ustensils--wrapper"></div> -->
+      
       </section>
       <section id="recipes__cards"></section>
       <span class="no-result__message"></span>
