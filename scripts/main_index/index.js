@@ -272,8 +272,7 @@ function displayDropdown(recipes) {
  */
 const searchInputIngredients = document.getElementById("searchIngredients");
 const searchInputAppliances = document.getElementById("searchAppliances");
-const searchInputustensils =document.getElementById("searchUstensils");
-
+const searchInputustensils = document.getElementById("searchUstensils");
 
 // display number of filtered recipes
 const DisplayFilteredRecipesNumber = (NumberOfRecipes) => {
@@ -399,7 +398,7 @@ function init() {
       .map((i) => i.ingredient)
       .forEach((ingredient) => {
         ingredientsSet.add(ingredient);
-      });  
+      });
     appliancesSet.add(recipe.appliance);
     recipe.ustensils.forEach((ustensil) => {
       ustensilsSet.add(ustensil);
