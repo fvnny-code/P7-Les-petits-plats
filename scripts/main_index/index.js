@@ -152,16 +152,6 @@ const search = () => {
   }
   currentRecipes = filteredRecipesByIngredients;
 
-  // currentRecipes = currentRecipes.filter((recipe) => {
-  //   let isOk = true;
-  //   selectedApplianceSet.forEach((appliance) => {
-  //     if (!recipe.appliance.includes(appliance)) {
-  //       isOk = false;
-  //     }
-  //   });
-  //   return isOk;
-  // });
-
   const filteredRecipesByAppliances = [];
   for (const recipe of currentRecipes) {
     let isOk = true;
@@ -183,17 +173,6 @@ const search = () => {
   }
 
   currentRecipes = filteredRecipesByAppliances;
-
-  // currentRecipes = currentRecipes.filter((recipe) => {
-  //   let isOk = true;
-  //   selectedUstensilsSet.forEach((ustensil) => {
-  //     if (!recipe.ustensils.includes(ustensil)) {
-  //       isOk = false;
-  //     }
-  //   });
-  //   return isOk;
-  // });
-
   const filteredRecipesByUstensils = [];
   for (const recipe of currentRecipes) {
     let isOk = true;
@@ -226,18 +205,6 @@ const search = () => {
   ingredientsSet.clear();
   appliancesSet.clear();
   ustensilsSet.clear();
-
-  // currentRecipes.forEach((recipe) => {
-  //   recipe.ingredients
-  //     .map((i) => i.ingredient) // comme pour un filter avec à la fin: ingredient.push(i.ingredient)
-  //     .forEach((ingredient) => {
-  //       ingredientsSet.add(ingredient);
-  //     });
-  //   appliancesSet.add(recipe.appliance);
-  //   recipe.ustensils.forEach((ustensil) => {
-  //     ustensilsSet.add(ustensil);
-  //   });
-  // });
 
   // Parcourir chaque recette pour extraire les éléments disponibles
   for (const recipe of currentRecipes) {
@@ -509,7 +476,6 @@ function DisplaySelectedUstensils() {
   deleteUstensilsButtons.forEach((btn) => {
     btn.addEventListener("click", (event) => {
       const div = event.target.parentElement;
-      console.log(div.dataset); // on récupère un objet ayant la propriété name
       if (selectedUstensilsSet.has(div.dataset.name)) {
         selectedUstensilsSet.delete(div.dataset.name);
         div.remove();
@@ -544,17 +510,6 @@ function init() {
   appliancesSet.clear();
   ustensilsSet.clear();
 
-  // allRecipes.forEach((recipe) => {
-  //   recipe.ingredients
-  //     .map((i) => i.ingredient)
-  //     .forEach((ingredient) => {
-  //       ingredientsSet.add(ingredient);
-  //     });
-  //   appliancesSet.add(recipe.appliance);
-  //   recipe.ustensils.forEach((ustensil) => {
-  //     ustensilsSet.add(ustensil);
-  //   });
-  // });
 // Parcourir chaque recette
 for (let i = 0; i < allRecipes.length; i++) {
   const recipe = allRecipes[i];
