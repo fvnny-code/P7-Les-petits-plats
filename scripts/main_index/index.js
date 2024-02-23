@@ -1,12 +1,12 @@
 let allRecipes = [];
 
-const selectedIngredientsSet = new Set();
-const selectedApplianceSet = new Set();
-const selectedUstensilsSet = new Set();
-
 const ingredientsSet = new Set();
 const appliancesSet = new Set();
 const ustensilsSet = new Set();
+
+const selectedIngredientsSet = new Set();
+const selectedApplianceSet = new Set();
+const selectedUstensilsSet = new Set();
 
 async function getDataJson() {
   const response = await fetch("data/recipes.json");
@@ -14,8 +14,8 @@ async function getDataJson() {
   init();
 }
 
-/** Recipe cars generation
- *
+/**
+ *Implémentation des recipe cards
  */
 function getRecipeCard(data) {
   const { image, name, ingredients, time, description, appliance, ustensils } =
@@ -70,7 +70,7 @@ function getRecipeCard(data) {
       `;
 }
 /**
- * Filters implementation
+ * Implémentation des filres dropdowns
  */
 function getDropdown(data) {
   return `
@@ -84,7 +84,7 @@ function getDropdown(data) {
   `;
 }
 /**
- * Remove diacritics.
+ * Suppression de signes diacritiques.
  */
 const normalize = (originalText) =>
   originalText
@@ -93,9 +93,9 @@ const normalize = (originalText) =>
     .toLowerCase();
 
 /**
- * Searchbar alogrithm, case 1 :
- * normalize string values
- * check if filter includes recipe name, description and ingredient.
+ *  Alogrithme de la barre de recherche cas 1 :
+ * normalisation des valeurs de chaînes de caractères
+ * Vérification si le filtre inclut le nom de la recette, sa description et ingrédients
  */
 const searchInput = document.getElementById("inputSearchBar");
 const search = () => {
@@ -122,7 +122,7 @@ const search = () => {
   }
 
   /**
-   * prendre en compte les éléments sélectionnés, refiltrer currentRecipes()
+   * refiltrage des élements sélectionnés currentRecipes(),
    * pour vérifier si l'ingredient sélectionné fait partie de la liste de la recette en cours.
    * Idem pour Appliances et ustensils.
    */
@@ -179,6 +179,7 @@ const search = () => {
         ingredientsSet.add(ingredient);
       });
     appliancesSet.add(recipe.appliance);
+
     recipe.ustensils.forEach((ustensil) => {
       ustensilsSet.add(ustensil);
     });
@@ -228,7 +229,7 @@ searchInput.addEventListener("input", (event) => {
 });
 
 /**
- * Display filters
+ * Affichage des filtres (dropdowns)
  */
 function displayDropdown(recipes) {
   const ingredientsSet = new Set();
@@ -255,26 +256,20 @@ function displayDropdown(recipes) {
       }
     });
   });
+  // Générer la liste des ingrédients
   const ingredientsList = getDropdown([...ingredientsSet]);
   document.getElementById("ingredients__list").innerHTML = ingredientsList;
-
+  // Générer la liste des appareils
   const applianceList = getDropdown([...applianceSet]);
   document.getElementById("appliance__list").innerHTML = applianceList;
-
+  // Générer la liste des ustensiles
   const ustensilsList = getDropdown([...ustensilsSet]);
   document.getElementById("ustensils__list").innerHTML = ustensilsList;
 }
 
 /**
- * ici reprendre le principe de search() avec tous les dropdowns,
- * pour que quand je remplis l’input du dropdwon  ingrédients renvoie l’ingrédient correspondant.
- * Idem pour appareil et ustensiles.
+ * Affichage du nombre de recettes.
  */
-const searchInputIngredients = document.getElementById("searchIngredients");
-const searchInputAppliances = document.getElementById("searchAppliances");
-const searchInputustensils = document.getElementById("searchUstensils");
-
-// display number of filtered recipes
 const DisplayFilteredRecipesNumber = (NumberOfRecipes) => {
   const container = document.querySelector(".recipes-number");
   const string = NumberOfRecipes > 1 ? "recettes" : "recette";
@@ -284,127 +279,14 @@ const DisplayFilteredRecipesNumber = (NumberOfRecipes) => {
   container.innerHTML = html;
 };
 
-function DisplaySelectedIngredients() {
-  const selectedTagsContainer = document.querySelector(
-    ".tag__ingredients--wrapper"
-  );
-  selectedTagsContainer.innerHTML = "";
-  selectedIngredientsSet.forEach((ingredient) => {
-    const html = `
-    <div class="tag" data-name="${ingredient}" >
-    <p>${ingredient}</p>
-    <p class="delete-ingredient">X</p>
-    </div>
-    `;
-    selectedTagsContainer.innerHTML += html;
-  });
-  // eventListener
-  const deleteIngredientButtons =
-    document.querySelectorAll(".delete-ingredient");
-  deleteIngredientButtons.forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      const div = event.target.parentElement;
-      console.log(div.dataset); // on récupère un objet ayant la propriété name
-      if (selectedIngredientsSet.has(div.dataset.name)) {
-        selectedIngredientsSet.delete(div.dataset.name);
-        div.remove();
-        search();
-      }
-    });
-  });
-}
-
-function DisplaySelectedAppliances() {
-  const selectedTagsContainer = document.querySelector(
-    ".tag__appliances--wrapper"
-  );
-  selectedTagsContainer.innerHTML = "";
-  selectedApplianceSet.forEach((appliance) => {
-    const html = `
-    <div class="tag" data-name="${appliance}" >
-    <p>${appliance}</p>
-    <p class="delete-appliance">X</p>
-    </div>
-    `;
-    selectedTagsContainer.innerHTML += html;
-  });
-  // eventListener
-  const deleteApplianceButtons = document.querySelectorAll(".delete-appliance");
-  deleteApplianceButtons.forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      const div = event.target.parentElement;
-      console.log(div.dataset); // on récupère un objet ayant la propriété name
-      if (selectedApplianceSet.has(div.dataset.name)) {
-        selectedApplianceSet.delete(div.dataset.name);
-        div.remove();
-        search();
-      }
-    });
-  });
-}
-
-function DisplaySelectedUstensils() {
-  const selectedTagsContainer = document.querySelector(
-    ".tag__ustensils--wrapper"
-  );
-  selectedTagsContainer.innerHTML = "";
-  selectedUstensilsSet.forEach((ustensils) => {
-    const html = `
-    <div class="tag" data-name="${ustensils}" >
-    <p>${ustensils}</p>
-    <p class="delete-ustensils">X</p>
-    </div>
-
-    `;
-    selectedTagsContainer.innerHTML += html;
-  });
-  // eventListener
-  const deleteUstensilsButtons = document.querySelectorAll(".delete-ustensils");
-  deleteUstensilsButtons.forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      const div = event.target.parentElement;
-      console.log(div.dataset); // on récupère un objet ayant la propriété name
-      if (selectedUstensilsSet.has(div.dataset.name)) {
-        selectedUstensilsSet.delete(div.dataset.name);
-        div.remove();
-        search();
-      }
-    });
-  });
-}
-
 /**
- * Display cards
+ * ici reprendre le principe de search() avec tous les dropdowns,
+ * pour que quand je remplis l’input du dropdwon  ingrédients renvoie l’ingrédient correspondant.
+ * Idem pour appareil et ustensiles.
  */
-function displayData(recipes) {
-  const recipeSection = document.getElementById("recipes__cards");
-  recipeSection.innerHTML = "";
-  recipes.forEach((recipe) => {
-    const recipeCard = getRecipeCard(recipe);
-    recipeSection.innerHTML += recipeCard;
-  });
-}
-
-function init() {
-  displayData(allRecipes);
-  displayDropdown(allRecipes);
-  DisplayFilteredRecipesNumber(allRecipes.length);
-  ingredientsSet.clear();
-  appliancesSet.clear();
-  ustensilsSet.clear();
-
-  allRecipes.forEach((recipe) => {
-    recipe.ingredients
-      .map((i) => i.ingredient)
-      .forEach((ingredient) => {
-        ingredientsSet.add(ingredient);
-      });
-    appliancesSet.add(recipe.appliance);
-    recipe.ustensils.forEach((ustensil) => {
-      ustensilsSet.add(ustensil);
-    });
-  });
-}
+const searchInputIngredients = document.getElementById("searchIngredients");
+const searchInputAppliances = document.getElementById("searchAppliances");
+const searchInputustensils = document.getElementById("searchUstensils");
 
 searchInputIngredients.addEventListener("input", (event) => {
   const value = normalize(event.target.value);
@@ -471,4 +353,133 @@ searchInputustensils.addEventListener("input", (event) => {
     }
   }, 300);
 });
+
+/**
+ * Affichage des tags.
+ */
+function DisplaySelectedIngredients() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__ingredients--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedIngredientsSet.forEach((ingredient) => {
+    const html = `
+    <div class="tag" data-name="${ingredient}" >
+    <p>${ingredient}</p>
+    <p class="delete-ingredient">X</p>
+    </div>
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+  // eventListener
+  const deleteIngredientButtons =
+    document.querySelectorAll(".delete-ingredient");
+  deleteIngredientButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      if (selectedIngredientsSet.has(div.dataset.name)) {
+        selectedIngredientsSet.delete(div.dataset.name);
+        div.remove();
+        search();
+      }
+    });
+  });
+}
+
+function DisplaySelectedAppliances() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__appliances--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedApplianceSet.forEach((appliance) => {
+    const html = `
+    <div class="tag" data-name="${appliance}" >
+    <p>${appliance}</p>
+    <p class="delete-appliance">X</p>
+    </div>
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+  // eventListener
+  const deleteApplianceButtons = document.querySelectorAll(".delete-appliance");
+  deleteApplianceButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      if (selectedApplianceSet.has(div.dataset.name)) {
+        selectedApplianceSet.delete(div.dataset.name);
+        div.remove();
+        search();
+      }
+    });
+  });
+}
+
+function DisplaySelectedUstensils() {
+  const selectedTagsContainer = document.querySelector(
+    ".tag__ustensils--wrapper"
+  );
+  selectedTagsContainer.innerHTML = "";
+  selectedUstensilsSet.forEach((ustensils) => {
+    const html = `
+    <div class="tag" data-name="${ustensils}" >
+    <p>${ustensils}</p>
+    <p class="delete-ustensils">X</p>
+    </div>
+
+    `;
+    selectedTagsContainer.innerHTML += html;
+  });
+  // eventListener
+  const deleteUstensilsButtons = document.querySelectorAll(".delete-ustensils");
+  deleteUstensilsButtons.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      const div = event.target.parentElement;
+      if (selectedUstensilsSet.has(div.dataset.name)) {
+        selectedUstensilsSet.delete(div.dataset.name);
+        div.remove();
+        search();
+      }
+    });
+  });
+}
+
+/**
+ * Affichage des recipe cards
+ */
+function displayData(recipes) {
+  const recipeSection = document.getElementById("recipes__cards");
+  recipeSection.innerHTML = "";
+  recipes.forEach((recipe) => {
+    const recipeCard = getRecipeCard(recipe);
+    recipeSection.innerHTML += recipeCard;
+  });
+}
+/**
+ * initialisation
+ */
+function init() {
+  displayData(allRecipes);
+  displayDropdown(allRecipes);
+  DisplayFilteredRecipesNumber(allRecipes.length);
+  ingredientsSet.clear();
+  appliancesSet.clear();
+  ustensilsSet.clear();
+
+  // parcourir chaque recette
+  allRecipes.forEach((recipe) => {
+    // parcourir les ingrédients d'une recette pour les ajouter au tableau ingredientsSet
+    recipe.ingredients
+      .map((i) => i.ingredient)
+      .forEach((ingredient) => {
+        ingredientsSet.add(ingredient);
+      });
+    // ajouter un appareil au tableau appliancesSet  
+    appliancesSet.add(recipe.appliance);
+    // parcourir les ustensiles d'une recette pour les ajouter au tableau ustensilsSet
+    recipe.ustensils.forEach((ustensil) => {
+      ustensilsSet.add(ustensil);
+    });
+  });
+}
+
 getDataJson();
